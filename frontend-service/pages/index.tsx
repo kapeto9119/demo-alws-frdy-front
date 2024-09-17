@@ -59,7 +59,7 @@ const Home: React.FC = () => {
     formData.append('image', selectedFile);
 
     try {
-      const response = await fetch('http://localhost:5000/api/images/upload', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}`, {
         method: 'POST',
         body: formData,
       });
