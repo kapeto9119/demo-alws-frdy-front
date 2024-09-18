@@ -57,19 +57,19 @@ const Home: React.FC = () => {
     setIsLoading(true);
     const formData = new FormData();
     formData.append('image', selectedFile);
-  
+
     try {
       // Use the NGINX proxy URL for the backend
       const response = await fetch('/api/', {
         method: 'POST',
         body: formData,
       });
-  
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText || 'Error processing image');
       }
-  
+
       const blob = await response.blob();
       const imageUrl = URL.createObjectURL(blob);
       setProcessedImage(imageUrl);
@@ -86,7 +86,6 @@ const Home: React.FC = () => {
       setIsLoading(false);
     }
   };
-  
 
   const handleDownload = () => {
     if (processedImage) {
