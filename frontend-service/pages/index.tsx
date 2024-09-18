@@ -60,7 +60,7 @@ const Home: React.FC = () => {
 
     try {
       // Use the NGINX proxy URL for the backend
-      const response = await fetch('/api/', {
+      const response = await fetch('/api/images/upload', {
         method: 'POST',
         body: formData,
       });
