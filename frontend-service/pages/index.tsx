@@ -18,11 +18,11 @@ const Home: React.FC = () => {
   const toast = useToast();
 
   const handleFileAccepted = (file: File) => {
-    // Validación del lado del cliente
+    // Client side validation
     if (!file.type.startsWith('image/')) {
       toast({
-        title: 'Tipo de archivo inválido',
-        description: 'Por favor, sube un archivo de imagen',
+        title: 'Invalid file type',
+        description: 'Please, select an image file',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -31,8 +31,8 @@ const Home: React.FC = () => {
     }
     if (file.size > 5 * 1024 * 1024) {
       toast({
-        title: 'Archivo demasiado grande',
-        description: 'El tamaño de la imagen debe ser menor a 5MB',
+        title: 'File is too large',
+        description: 'Image size must be less than 5MB',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -46,8 +46,8 @@ const Home: React.FC = () => {
   const handleSubmit = async () => {
     if (!selectedFile) {
       toast({
-        title: 'No se ha seleccionado ningún archivo',
-        description: 'Por favor, selecciona una imagen para subir',
+        title: 'No file has been selected',
+        description: 'Please, select an image file',
         status: 'warning',
         duration: 5000,
         isClosable: true,
@@ -57,18 +57,19 @@ const Home: React.FC = () => {
     setIsLoading(true);
     const formData = new FormData();
     formData.append('image', selectedFile);
-
+  
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}`, {
+      // Use the NGINX proxy URL for the backend
+      const response = await fetch('/api/', {
         method: 'POST',
         body: formData,
       });
-
+  
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(errorText || 'Error al procesar la imagen');
+        throw new Error(errorText || 'Error processing image');
       }
-
+  
       const blob = await response.blob();
       const imageUrl = URL.createObjectURL(blob);
       setProcessedImage(imageUrl);
@@ -76,7 +77,7 @@ const Home: React.FC = () => {
       console.error(error);
       toast({
         title: 'Error',
-        description: 'Ocurrió un error al procesar la imagen.',
+        description: 'An error occurred while processing the image',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -85,6 +86,7 @@ const Home: React.FC = () => {
       setIsLoading(false);
     }
   };
+  
 
   const handleDownload = () => {
     if (processedImage) {
@@ -98,14 +100,14 @@ const Home: React.FC = () => {
   return (
     <Box textAlign="center" p={5}>
       <Heading as="h1" size="xl" mb={5}>
-        Aplicación de Detección Facial
+        Facial Recognition App for Always Friday Interview
       </Heading>
 
       <Dropzone onFileAccepted={handleFileAccepted} />
 
       {selectedFile && !processedImage && (
         <Box mb={5}>
-          <Text fontWeight="bold">Imagen Seleccionada:</Text>
+          <Text fontWeight="bold">Selected Image:</Text>
           <Image
             src={URL.createObjectURL(selectedFile)}
             alt="Seleccionada"
@@ -124,12 +126,12 @@ const Home: React.FC = () => {
         mb={5}
         disabled={isLoading || !selectedFile}
       >
-        Subir y Detectar Rostros
+        Upload and Detect Faces
       </Button>
 
       {processedImage && selectedFile && (
         <VStack spacing={5}>
-          <Text fontWeight="bold">Comparación de Imágenes:</Text>
+          <Text fontWeight="bold">Image Comparison:</Text>
           <Stack
             direction={['column', 'row']}
             spacing={5}
@@ -146,7 +148,7 @@ const Home: React.FC = () => {
               />
             </Box>
             <Box>
-              <Text fontWeight="medium">Procesada</Text>
+              <Text fontWeight="medium">Processed</Text>
               <Image
                 src={processedImage}
                 alt="Procesada"
@@ -156,7 +158,7 @@ const Home: React.FC = () => {
             </Box>
           </Stack>
           <Button colorScheme="teal" onClick={handleDownload}>
-            Descargar Imagen Procesada
+            Download Processed Image
           </Button>
         </VStack>
       )}
