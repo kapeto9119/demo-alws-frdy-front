@@ -19,7 +19,11 @@ const Home: React.FC = () => {
 
   const handleFileAccepted = (file: File) => {
     // Client side validation, allowing HEIC/HEIF and JPEG formats
-    if (!['image/jpeg', 'image/png', 'image/heic', 'image/heif'].includes(file.type)) {
+    if (
+      !['image/jpeg', 'image/png', 'image/heic', 'image/heif'].includes(
+        file.type
+      )
+    ) {
       toast({
         title: 'Invalid file type',
         description: 'Please select an image (JPEG, PNG, HEIC/HEIF)',
