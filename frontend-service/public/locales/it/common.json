@@ -1,7 +1,7 @@
 {
   "title": "App di Riconoscimento Facciale per l'intervista Always Friday",
   "aboutMe": "Chi Sono",
-  "description": "Ciao, sono Nicolás Capetillo, un ingegnere del software appassionato, specializzato in soluzioni cloud, IA e sviluppo web. Cerco sempre di innovare e affrontare nuove sfide.",
+  "description": "Ciao! Sono Nicolás Capetillo, un ingegnere del software che ha messo mano in diversi settori dell'industria (IoT, sviluppo backend, cloud e sviluppo di infrastrutture—le solite cose), anche se per quanto riguarda il front-end... diciamo che preferisco stare dietro le quinte, ahah. Mi considero metodico, responsabile e (penso) abbastanza piacevole con cui lavorare. Adoro il business e l'innovazione, tanto che ho deciso di complicarmi la vita con un master in Computer Science and Engineering, nel track di ICT Engineering, Business and Innovation, che casualmente si adatta perfettamente al mio profilo professionale. Piacere di conoscermi! 😄",
   "uploadButton": "Carica e Rileva i Volti",
   "selectedImage": "Immagine Selezionata:",
   "invalidFileType": "Tipo di file non valido",

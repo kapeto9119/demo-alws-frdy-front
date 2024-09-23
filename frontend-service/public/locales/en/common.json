@@ -1,7 +1,7 @@
 {
   "title": "Facial Recognition App for Always Friday Interview",
   "aboutMe": "About Me",
-  "description": "Hi, I'm Nicolás Capetillo, a passionate software engineer specialized in cloud solutions, AI, and web development. I'm always looking to innovate and tackle new challenges.",
+  "description": "Hi there! I'm Nicolás Capetillo, a software engineer who's dabbled in various areas of the industry (IoT, Backend development, Cloud and infrastructure development—you know, the usual), though when it comes to front-end... well, let's just say I'm more of a backstage kind of guy, haha. I'm methodical, responsible, and (I think) pretty pleasant to work with. I love business and innovation, so much so that I decided to take on the challenge of a master’s in Computer Science and Engineering, focusing on ICT Engineering, Business and Innovation, which, conveniently, fits perfectly with my professional profile. Nice to meet me! 😄",
   "uploadButton": "Upload and Detect Faces",
   "selectedImage": "Selected Image:",
   "invalidFileType": "Invalid file type",
