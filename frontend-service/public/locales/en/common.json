@@ -1,0 +1,15 @@
+{
+  "title": "Facial Recognition App for Always Friday Interview",
+  "aboutMe": "About Me",
+  "description": "Hi, I'm Nicolás Capetillo, a passionate software engineer specialized in cloud solutions, AI, and web development. I'm always looking to innovate and tackle new challenges.",
+  "uploadButton": "Upload and Detect Faces",
+  "selectedImage": "Selected Image:",
+  "invalidFileType": "Invalid file type",
+  "pleaseSelectImage": "Please select an image (JPEG, PNG, HEIC/HEIF)",
+  "fileTooLarge": "File is too large",
+  "imageSizeLimit": "Image size must be less than 5MB",
+  "noFileSelected": "No file has been selected",
+  "error": "Error",
+  "errorProcessingImage": "An error occurred while processing the image",
+  "downloadButton": "Download Processed Image"
+}

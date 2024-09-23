@@ -4,29 +4,40 @@ import {
   Button,
   Image,
   Text,
-  useToast,
   VStack,
   Heading,
-  Stack,
+  Center,
+  Avatar,
+  Flex,
+  Spacer,
+  useToast,
 } from '@chakra-ui/react';
 import Dropzone from '../components/Dropzone';
+import ExplanationModal from '../components/ExplanationModal';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { GetStaticProps } from 'next';
 
-const Home: React.FC = () => {
+const Home = () => {
+  const { t, i18n } = useTranslation('common');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
 
+  if (!i18n.isInitialized) {
+    return <p>Loading translations...</p>;
+  }
+
   const handleFileAccepted = (file: File) => {
-    // Client side validation, allowing HEIC/HEIF and JPEG formats
     if (
       !['image/jpeg', 'image/png', 'image/heic', 'image/heif'].includes(
         file.type
       )
     ) {
       toast({
-        title: 'Invalid file type',
-        description: 'Please select an image (JPEG, PNG, HEIC/HEIF)',
+        title: t('invalidFileType'),
+        description: t('pleaseSelectImage'),
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -36,8 +47,8 @@ const Home: React.FC = () => {
 
     if (file.size > 5 * 1024 * 1024) {
       toast({
-        title: 'File is too large',
-        description: 'Image size must be less than 5MB',
+        title: t('fileTooLarge'),
+        description: t('imageSizeLimit'),
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -51,8 +62,8 @@ const Home: React.FC = () => {
   const handleSubmit = async () => {
     if (!selectedFile) {
       toast({
-        title: 'No file has been selected',
-        description: 'Please, select an image file',
+        title: t('noFileSelected'),
+        description: t('pleaseSelectImage'),
         status: 'warning',
         duration: 5000,
         isClosable: true,
@@ -64,7 +75,6 @@ const Home: React.FC = () => {
     formData.append('image', selectedFile);
 
     try {
-      // Use the NGINX proxy URL for the backend
       const response = await fetch('/api/images/upload', {
         method: 'POST',
         body: formData,
@@ -78,11 +88,12 @@ const Home: React.FC = () => {
       const blob = await response.blob();
       const imageUrl = URL.createObjectURL(blob);
       setProcessedImage(imageUrl);
-    } catch (error: any) {
+      setSelectedFile(null);
+    } catch (error) {
       console.error(error);
       toast({
-        title: 'Error',
-        description: 'An error occurred while processing the image',
+        title: t('error'),
+        description: t('errorProcessingImage'),
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -92,73 +103,102 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleDownload = () => {
-    if (processedImage) {
-      const link = document.createElement('a');
-      link.href = processedImage;
-      link.download = 'processed_image.jpg';
-      link.click();
-    }
-  };
-
   return (
-    <Box textAlign="center" p={5}>
-      <Heading as="h1" size="xl" mb={5}>
-        Facial Recognition App for Always Friday Interview
-      </Heading>
-
-      <Dropzone onFileAccepted={handleFileAccepted} />
-
-      {selectedFile && !processedImage && (
-        <Box mb={5}>
-          <Text fontWeight="bold">Selected Image:</Text>
-          <Image
-            src={URL.createObjectURL(selectedFile)}
-            alt="Seleccionada"
-            maxW={['100%', '400px']}
-            mx="auto"
-            my={3}
-          />
-        </Box>
-      )}
-
-      <Button
-        colorScheme="teal"
-        onClick={handleSubmit}
-        isLoading={isLoading}
-        loadingText="Procesando"
-        mb={5}
-        disabled={isLoading || !selectedFile}
+    <Flex direction={['column', 'column', 'row']} height="100vh">
+      <Box
+        w={['100%', '100%', '30%']}
+        p={5}
+        textAlign={['center', 'center', 'left']}
+        display="flex"
+        flexDirection="column"
+        justifyContent="flex-start"
+        height="100%"
+        bg={['transparent', 'transparent', 'gray.100']}
       >
-        Upload and Detect Faces
-      </Button>
+        <Heading
+          as="h2"
+          size="lg"
+          mb={5}
+          textAlign={['center', 'center', 'left']}
+        >
+          {t('aboutMe')}
+        </Heading>
+        <Center mb={4}>
+          <Avatar size="2xl" src="../img.jpg" />
+        </Center>
+        <Text fontSize="lg" mb={4} textAlign={['center', 'center', 'left']}>
+          {t('description')}
+        </Text>
+        <Center>
+          <ExplanationModal />
+        </Center>
+        <Spacer />
+        <Center mt={3}>
+          <Button onClick={() => i18n.changeLanguage('en')}>English</Button>
+          <Button onClick={() => i18n.changeLanguage('it')} ml={3}>
+            Italian
+          </Button>
+        </Center>
+      </Box>
 
-      {processedImage && (
-        <VStack spacing={5}>
-          <Text fontWeight="bold">Image Comparison:</Text>
-          <Stack
-            direction={['column', 'row']}
-            spacing={5}
-            align="center"
-            justify="center"
-          >
-            <Box>
-              <Text fontWeight="medium">Processed</Text>
+      <Box flex="1" p={5}>
+        <Heading as="h1" size="xl" mb={10} textAlign="center">
+          {t('title')}
+        </Heading>
+
+        <Center flexDirection="column" maxW="70%" mx="auto">
+          <Dropzone onFileAccepted={handleFileAccepted} />
+
+          {selectedFile && !processedImage && (
+            <Box mb={5} textAlign="center">
+              <Text fontWeight="bold">{t('selectedImage')}</Text>
               <Image
-                src={processedImage}
-                alt="Procesada"
+                src={URL.createObjectURL(selectedFile)}
+                alt="Selected"
                 maxW={['100%', '400px']}
                 mx="auto"
+                my={3}
               />
             </Box>
-          </Stack>
-          <Button colorScheme="teal" onClick={handleDownload}>
-            Download Processed Image
+          )}
+
+          <Button
+            colorScheme="teal"
+            onClick={handleSubmit}
+            isLoading={isLoading}
+            loadingText={t('uploadButton')}
+            mb={5}
+            disabled={isLoading || !selectedFile}
+            w="full"
+            maxW="400px"
+            mx="auto"
+          >
+            {t('uploadButton')}
           </Button>
-        </VStack>
-      )}
-    </Box>
+
+          {processedImage && (
+            <VStack spacing={5}>
+              <Box>
+                <Image
+                  src={processedImage}
+                  alt="Processed"
+                  maxW={['100%', '400px']}
+                  mx="auto"
+                />
+              </Box>
+              <Button colorScheme="teal">{t('downloadButton')}</Button>
+            </VStack>
+          )}
+        </Center>
+      </Box>
+    </Flex>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale as string, ['common'])),
+  },
+});
 
 export default Home;

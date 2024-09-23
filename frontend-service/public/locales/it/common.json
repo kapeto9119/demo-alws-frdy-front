@@ -1,0 +1,15 @@
+{
+  "title": "App di Riconoscimento Facciale per l'intervista Always Friday",
+  "aboutMe": "Chi Sono",
+  "description": "Ciao, sono Nicolás Capetillo, un ingegnere del software appassionato, specializzato in soluzioni cloud, IA e sviluppo web. Cerco sempre di innovare e affrontare nuove sfide.",
+  "uploadButton": "Carica e Rileva i Volti",
+  "selectedImage": "Immagine Selezionata:",
+  "invalidFileType": "Tipo di file non valido",
+  "pleaseSelectImage": "Seleziona un'immagine (JPEG, PNG, HEIC/HEIF)",
+  "fileTooLarge": "Il file è troppo grande",
+  "imageSizeLimit": "La dimensione dell'immagine deve essere inferiore a 5 MB",
+  "noFileSelected": "Nessun file selezionato",
+  "error": "Errore",
+  "errorProcessingImage": "Si è verificato un errore durante l'elaborazione dell'immagine",
+  "downloadButton": "Scarica Immagine Elaborata"
+}
