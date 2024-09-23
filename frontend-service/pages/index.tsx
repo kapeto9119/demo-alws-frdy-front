@@ -21,7 +21,7 @@ import { GetStaticProps } from 'next';
 const Home = () => {
   const { t, i18n } = useTranslation('common');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [processedImage, setProcessedImage] = useState<File | null>(null);
+  const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
 
