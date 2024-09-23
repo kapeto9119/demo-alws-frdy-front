@@ -55,5 +55,6 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/frontend-service:latest
             docker stop frontend-service || true
             docker rm frontend-service || true
+            docker rmi $(docker images -q ${{ secrets.DOCKER_USERNAME }}/frontend-service) || true
             docker run --name frontend-service --network demo-always-friday-network -p 3000:3000 -d ${{ secrets.DOCKER_USERNAME }}/frontend-service:latest
           EOF
