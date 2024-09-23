@@ -18,17 +18,18 @@ const Home: React.FC = () => {
   const toast = useToast();
 
   const handleFileAccepted = (file: File) => {
-    // Client side validation
-    if (!file.type.startsWith('image/')) {
+    // Client side validation, allowing HEIC/HEIF and JPEG formats
+    if (!['image/jpeg', 'image/png', 'image/heic', 'image/heif'].includes(file.type)) {
       toast({
         title: 'Invalid file type',
-        description: 'Please, select an image file',
+        description: 'Please select an image (JPEG, PNG, HEIC/HEIF)',
         status: 'error',
         duration: 5000,
         isClosable: true,
       });
       return;
     }
+
     if (file.size > 5 * 1024 * 1024) {
       toast({
         title: 'File is too large',
@@ -128,7 +129,7 @@ const Home: React.FC = () => {
         Upload and Detect Faces
       </Button>
 
-      {processedImage && selectedFile && (
+      {processedImage && (
         <VStack spacing={5}>
           <Text fontWeight="bold">Image Comparison:</Text>
           <Stack
@@ -137,15 +138,6 @@ const Home: React.FC = () => {
             align="center"
             justify="center"
           >
-            <Box>
-              <Text fontWeight="medium">Original</Text>
-              <Image
-                src={URL.createObjectURL(selectedFile)}
-                alt="Original"
-                maxW={['100%', '400px']}
-                mx="auto"
-              />
-            </Box>
             <Box>
               <Text fontWeight="medium">Processed</Text>
               <Image
