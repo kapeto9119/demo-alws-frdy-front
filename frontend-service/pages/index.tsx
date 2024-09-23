@@ -103,6 +103,15 @@ const Home = () => {
     }
   };
 
+  const handleDownload = () => {
+    if (processedImage) {
+      const link = document.createElement('a');
+      link.href = processedImage;
+      link.download = 'processed_image.jpg';
+      link.click();
+    }
+  };
+
   return (
     <Flex direction={['column', 'column', 'row']} height="100vh">
       <Box
@@ -186,7 +195,7 @@ const Home = () => {
                   mx="auto"
                 />
               </Box>
-              <Button colorScheme="teal">{t('downloadButton')}</Button>
+              <Button colorScheme="teal" onClick={handleDownload}>{t('downloadButton')}</Button>
             </VStack>
           )}
         </Center>
