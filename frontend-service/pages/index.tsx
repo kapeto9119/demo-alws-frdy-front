@@ -172,7 +172,7 @@ const Home = () => {
           )}
 
           <Button
-            colorScheme="teal"
+            colorScheme="red"
             onClick={handleSubmit}
             isLoading={isLoading}
             loadingText={t('uploadButton')}
