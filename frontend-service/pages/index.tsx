@@ -172,7 +172,7 @@ const Home = () => {
           )}
 
           <Button
-            colorScheme="teal"
+            colorScheme="red"
             onClick={handleSubmit}
             isLoading={isLoading}
             loadingText={t('uploadButton')}
@@ -195,7 +195,9 @@ const Home = () => {
                   mx="auto"
                 />
               </Box>
-              <Button colorScheme="teal" onClick={handleDownload}>{t('downloadButton')}</Button>
+              <Button colorScheme="teal" onClick={handleDownload}>
+                {t('downloadButton')}
+              </Button>
             </VStack>
           )}
         </Center>

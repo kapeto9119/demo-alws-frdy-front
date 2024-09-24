@@ -23,7 +23,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ onFileAccepted }) => {
     <Box
       {...getRootProps()}
       border="2px dashed"
-      borderColor={isDragActive ? 'teal.500' : 'gray.200'}
+      borderColor={isDragActive ? 'teal.500' : 'red.200'}
       borderRadius="md"
       p={10}
       mb={5}
